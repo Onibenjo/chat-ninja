@@ -1,7 +1,7 @@
 <template>
-  <div class="home">
-    <Welcome msg="Welcome to Your Vue.js App" />
-  </div>
+  <v-container fluid>
+    <Welcome />
+  </v-container>
 </template>
 
 <script>
