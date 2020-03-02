@@ -1,5 +1,11 @@
 <template>
-  <v-form ref="form2" class="my-5" @submit.prevent="addMessage" v-model="valid">
+  <v-form
+    ref="form2"
+    class="mb-4"
+    @submit.prevent="addMessage"
+    v-model="valid"
+    width="350"
+  >
     <v-text-field
       v-model="message"
       label="Enter your message"

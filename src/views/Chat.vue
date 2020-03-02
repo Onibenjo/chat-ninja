@@ -1,15 +1,13 @@
 <template>
   <v-container>
-    <!-- <v-row class="text-center"> -->
     <h2 class="teal--text text-center">Ninja Chat</h2>
     <v-card class="mx-auto" max-width="400">
-      <!-- <v-card-text> -->
-      <v-list two-line>
-        <v-list-item-group multiple active-class="pink--text">
+      <v-list two-line max-height="300" class="messages" v-chat-scroll>
+        <v-list-item-group active-class="pink--text" v-chat-scroll>
           <template v-for="item in messages">
             <v-list-item :key="item.id">
-              <v-list-item-avatar>
-                <v-avatar color="red">
+              <v-list-item-avatar color="teal">
+                <v-avatar>
                   <span class="white--text headline">{{
                     item.name.slice(0, 1)
                   }}</span>
@@ -35,9 +33,7 @@
       <v-card-actions>
         <NewMessage :name="name" />
       </v-card-actions>
-      <!-- </v-card-text> -->
     </v-card>
-    <!-- </v-row> -->
   </v-container>
 </template>
 
@@ -53,13 +49,25 @@ export default {
     NewMessage
   },
   data: () => ({
-    messages: []
+    messages: [],
+    colors: ["red", "green", "blue", "purple", "yellow"]
+  }),
+  methods: () => ({
+    randColor() {
+      let rand = Math.floor(Math.random() * 6);
+      return this.colors[rand];
+    }
+  }),
+  computed: () => ({
+    randColor2() {
+      let rand = Math.floor(Math.random() * 6);
+      return this.colors[rand];
+    }
   }),
   created() {
     let ref = db.collection("chat-ninja").orderBy("createdDate");
 
     ref.onSnapshot(snapshot => {
-      console.log(snapshot.docChanges());
       snapshot.docChanges().forEach(change => {
         if (change.type == "added") {
           let doc = change.doc;
@@ -74,3 +82,18 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.messages {
+  overflow: auto;
+}
+.messages::-webkit-scrollbar {
+  width: 6px;
+}
+.messages::-webkit-scrollbar-track {
+  background: #ddd;
+}
+.messages::-webkit-scrollbar-thumb {
+  background: #aaa;
+}
+</style>
